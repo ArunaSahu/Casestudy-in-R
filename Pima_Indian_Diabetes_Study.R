@@ -66,7 +66,7 @@ threshold_0.5 <- table(train$Outcome, PredictTrain > 0.5)
 threshold_0.5
 accuracy_0.5 <- round(sum(diag(threshold_0.5))/sum(threshold_0.5),2)
 accuracy_0.5
-
+[1] 0.78
 # Build confusion matrix with a threshold value of 0.7
 threshold_0.7 <- table(train$Outcome, PredictTrain > 0.7)
 threshold_0.7
@@ -74,7 +74,7 @@ threshold_0.7
 # Accuracy
 accuracy_0.7 <- round(sum(diag(threshold_0.7))/sum(threshold_0.7),2)
 accuracy_0.7
-
+[1] 0.76
 # Build confusion matrix with a threshold value of 0.2
 threshold_0.2 <- table(train$Outcome, PredictTrain > 0.2)
 threshold_0.2
@@ -82,7 +82,7 @@ threshold_0.2
 # Accuracy
 accuracy_0.2 <- round(sum(diag(threshold_0.2))/sum(threshold_0.2),2)
 accuracy_0.2
-
+[1] 0.69
 # Generate ROC Curves
 
 library(ROCR)
@@ -93,10 +93,11 @@ ROCRperf = performance(ROCRpred, "tpr", "fpr")
 plot(ROCRperf, colorize=TRUE, print.cutoffs.at = seq(0,1,0.1), text.adj = c(-0.2, 1.7))
 abline(a=0, b=1)
 auc_train <- round(as.numeric(performance(ROCRpred, "auc")@y.values),2)
-#legend(.8, .2, auc_train, title = "AUC", cex=1)
+auc_train
+[1] 0.84
+
 
 # Making predictions on test set
-
 PredictTest <- predict(AllVar, type = "response", newdata = test)
 # Convert probabilities to values using the below
 
@@ -109,3 +110,4 @@ accuracy_test <- round(sum(diag(test_tab))/sum(test_tab),2)
 ROCRPredTest = prediction(PredictTest, test$Outcome)
 auc = round(as.numeric(performance(ROCRPredTest, "auc")@y.values),2)
 auc
+0.89
